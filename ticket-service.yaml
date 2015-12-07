@@ -1,0 +1,40 @@
+# Logging settings.
+# The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+logging:
+  level: INFO
+  loggers:
+    cmuoh.ticketService.ReservationManager: DEBUG
+  appenders:
+    - type: console
+    - type: file
+      threshold: INFO
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+      currentLogFilename: /tmp/ticket-service.log
+      archivedLogFilenamePattern: /tmp/ticket-service-%d{yyyy-MM-dd}-%i.log.gz
+      archivedFileCount: 7
+      timeZone: UTC
+      maxFileSize: 10MB
+
+# Configure the HTTP server
+server:
+    applicationConnectors:
+      - type: http
+        port: 8080
+    adminConnectors:
+      - type: http
+        port: 8081
+
+venueSeating:
+  # After how many seconds should unconfirmed seat holds expire
+  holdsExpireAfter: 120
+
+  # The seating level information for the venue
+  seatLevels:
+    - name : "nose bleed"
+      price : 10.0
+      rows : 1
+      seatsInRow : 10
+    - name : "executive level"
+      price : 30.95
+      rows : 1
+      seatsInRow : 5
